@@ -2,22 +2,6 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 public class PrettyPrinterVisitor extends SheetGrammarBaseVisitor<String>{
-//    @Override
-//    public String visitStart(SheetGrammarParser.StartContext c) {
-//        StringBuilder s = new StringBuilder();
-//        for (SheetGrammarParser.StmtContext i : c.stmt()) {
-//            s.append(i.accept(this));
-//        }
-//
-//        return s.toString();
-//    }
-//
-//    @Override
-//    public String visitStmt(SheetGrammarParser.VardeclContext c) {
-//        StringBuilder s = new StringBuilder();
-//        c.children
-//    }
-
     private int indentLevel = 0;
 
     private String indent() {
