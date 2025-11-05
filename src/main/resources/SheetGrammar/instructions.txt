@@ -6,3 +6,10 @@ else do
         a :=      7
         end
 a := 123
+
+
+      while
+    a == a
+        do
+    b := 342
+end

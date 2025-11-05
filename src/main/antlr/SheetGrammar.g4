@@ -4,9 +4,9 @@ grammar SheetGrammar;
 // Parser
 start   : stmt* EOF ;
 
-stmt    : vardecl NL
-        | while NL
-        | cond NL ;
+stmt    : vardecl NL+
+        | while NL+
+        | cond NL+ ;
 
 vardecl : IDENT ':=' expr ;
 

@@ -1,4 +1,5 @@
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 public class PrettyPrinterVisitor extends SheetGrammarBaseVisitor<String>{
 //    @Override
@@ -36,11 +37,15 @@ public class PrettyPrinterVisitor extends SheetGrammarBaseVisitor<String>{
     public String visitStmt(SheetGrammarParser.StmtContext ctx) {
         StringBuilder sb = new StringBuilder();
 
-        for (var stmt : ctx.stmt()) {  // nur die Stmts besuchen
-            sb.append(stmt.accept(this)).append("\n");
+        for (ParseTree p: ctx.children) {
+            sb.append(p.accept(this));
         }
-
         return sb.toString();
+    }
+
+    @Override
+    public String visitTerminal(TerminalNode node) {
+        return "";
     }
 
     @Override
@@ -51,10 +56,10 @@ public class PrettyPrinterVisitor extends SheetGrammarBaseVisitor<String>{
     @Override
     public String visitWhile(SheetGrammarParser.WhileContext ctx) {
         StringBuilder sb = new StringBuilder();
-        sb.append(indent()).append("while\n");
+        sb.append(indent()).append("while ");
         indentLevel++;
-        sb.append(visit(ctx.expr())).append("\n");
-        sb.append(indent()).append("do\n");
+        sb.append(visit(ctx.expr()));
+        sb.append(" do\n");
         for (var stmt : ctx.stmt()) {
             sb.append(visit(stmt)).append("\n");
         }
@@ -66,12 +71,12 @@ public class PrettyPrinterVisitor extends SheetGrammarBaseVisitor<String>{
     @Override
     public String visitCond(SheetGrammarParser.CondContext ctx) {
         StringBuilder sb = new StringBuilder();
-        sb.append(indent()).append("if\n");
+        sb.append(indent()).append("if ");
         indentLevel++;
-        sb.append(visit(ctx.expr())).append("\n");
-        sb.append(indent()).append("do\n");
+        sb.append(visit(ctx.expr()));
+        sb.append(" do\n");
         for (var stmt : ctx.stmt()) {
-            sb.append(visit(stmt)).append("\n");
+            sb.append(visit(stmt)).append("\n"); // Irgendwas ist hier in der Region komisch
         }
         if (ctx.stmt().size() > 1) {
             sb.append(indent()).append("else\n");
